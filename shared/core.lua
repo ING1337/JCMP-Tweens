@@ -43,6 +43,13 @@ end
 -- ########################################################################################################################################################
 -- ########################################################################################################################################################
 
+function TweenCore:SampleEvent(type, item)
+	if item.events then
+		send = item.events[TweenEvents.TickEnd] or item.events[type]
+		if send then Events:Fire(send, item) end
+	end
+end
+
 function TweenCore:TriggerTween(name)
 	item = self.tweens[name]
 	if (not item) then return end
@@ -50,17 +57,12 @@ function TweenCore:TriggerTween(name)
 	if (time >= (item.init + item.time)) then
 		for name, value in pairs(item.values) do item.object[name] = value end
 		self.tweens[name] = nil
-		if item.events and item.events[TweenEvents.End] then
-			Events:Fire(item.events[TweenEvents.End], item)
-		end
+		self:SampleEvent(TweenEvents.End, item)
 	else
 		for name, value in pairs(item.values) do
 			item.object[name] = Motions[item.motion](item.start[name], value, (time - item.init) / item.time)
 		end
-		
 		Events:Fire("DelayedEvent", {event = "TriggerTween", delay = item.ticks, args = item.name})
-		if item.events and item.events[TweenEvents.Tick] then
-			Events:Fire(item.events[TweenEvents.Tick], item)
-		end
+		self:SampleEvent(TweenEvents.Tick, item)
 	end
 end

@@ -24,11 +24,11 @@ function TweenWrapper:CreateTween(args)
 					values[prop] = args.values[name][prop]
 				end
 				local id = self.core:AddTween({
-					object		= current,
-					values		= values,
-					time		= args.time,
-					ticks		= args.ticks,
-					events		= {Tick = "WrapStep", End = "WrapEnd"},
+					object	= current,
+					values	= values,
+					time	= args.time,
+					ticks	= args.ticks,
+					events	= {Tick = "WrapStep", End = "WrapEnd"},
 				})
 				self.wraps[id] = {
 					object	= args.object,

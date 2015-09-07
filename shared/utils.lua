@@ -1,12 +1,13 @@
 Settings = {
 	DefaultTicks		= 50,
-	DefaultID		= "tw"
+	DefaultID		= "tw",
 }
 
 TweenEvents = {
 	End			= "End",
 	Tick			= "Tick",
 	TickEnd			= "TickEnd",
+	Error			= "Error",
 }
 
 -- ########################################################################################################################################################

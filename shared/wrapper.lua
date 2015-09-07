@@ -1,9 +1,8 @@
-
 class 'TweenWrapper'
 
 function TweenWrapper:__init()
-	self.core		= TweenCore()
-	self.wraps		= {}
+	self.core	= TweenCore()
+	self.wraps	= {}
 	Events:Subscribe("CreateTween", self, self.CreateTween)
 	Events:Subscribe("RemoveTween", self, self.RemoveTween)
 	Events:Subscribe("WrapStep", self, self.WrapStep)
@@ -26,12 +25,15 @@ function TweenWrapper:CreateTween(args)
 				local id = self.core:AddTween({
 					object	= current,
 					values	= values,
+					name	= args.name,
 					time	= args.time,
 					ticks	= args.ticks,
+					motion	= args.motion,
 					events	= {Tick = "WrapStep", End = "WrapEnd"},
 				})
 				self.wraps[id] = {
 					object	= args.object,
+					events	= args.events,
 					type	= name,
 				}
 			end
@@ -54,6 +56,7 @@ function TweenWrapper:WrapStep(tween)
 	if self.wraps[tween.name] then
 		if IsValid(self.wraps[tween.name].object) then
 			WrapFunctions.Setter[self.wraps[tween.name].type](self.wraps[tween.name].object, tween.object)
+			self.core:SampleEvent(tween, TweenEvents.Tick, self.wraps[tween.name].events)
 		else
 			self:RemoveTween(tween.name)
 			self.wraps[tween.name] = nil
@@ -62,8 +65,11 @@ function TweenWrapper:WrapStep(tween)
 end
 
 function TweenWrapper:WrapEnd(tween)
-	self:WrapStep(tween)
-	self.wraps[tween.name] = nil
+	if self.wraps[tween.name] then
+		self:WrapStep(tween)
+		self.core:SampleEvent(tween, TweenEvents.End, self.wraps[tween.name].events)
+		self.wraps[tween.name] = nil
+	end
 end
 
 -- ########################################################################################################################################################

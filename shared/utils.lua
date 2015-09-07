@@ -1,6 +1,6 @@
 Settings = {
 	DefaultTicks		= 50,
-	DefaultID		= "tw",
+	DefaultIDPrefix		= "tw",
 }
 
 TweenEvents = {

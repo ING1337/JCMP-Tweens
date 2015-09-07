@@ -58,6 +58,7 @@ function TweenWrapper:WrapStep(tween)
 			WrapFunctions.Setter[self.wraps[tween.name].type](self.wraps[tween.name].object, tween.object)
 			self.core:SampleEvent(tween, TweenEvents.Tick, self.wraps[tween.name].events)
 		else
+			self.core:SampleEvent(tween, TweenEvents.Error, self.wraps[tween.name].events)
 			self:RemoveTween(tween.name)
 			self.wraps[tween.name] = nil
 		end

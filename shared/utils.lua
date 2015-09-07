@@ -1,12 +1,12 @@
-
 Settings = {
-	DefaultTicks		= 30,
+	DefaultTicks		= 50,
 	DefaultID		= "tw"
 }
 
 TweenEvents = {
 	End			= "End",
 	Tick			= "Tick",
+	TickEnd			= "TickEnd",
 }
 
 -- ########################################################################################################################################################
@@ -38,32 +38,4 @@ WrapFunctions = {
 		position	= function(object, value) object:SetPosition(value) end,
 		angle		= function(object, value) object:SetAngle(value) end,
 	}
-}
-
--- ########################################################################################################################################################
--- ########################################################################################################################################################
--- ########################################################################################################################################################
-
-Linear = function(val1, val2, ratio)
-	return val1 + (val2 - val1) * ratio
-end
-
-EaseIn = function(val1, val2, ratio)
-	return val1 + (val2 - val1) * ratio * ratio * ratio
-end
-
-EaseOut = function(val1, val2, ratio)
-	ratio = ratio - 1
-	return (val2 - val1) * ratio * ratio * ratio + val2
-end
-
-EaseInOut = function(val1, val2, ratio)
-	return .5 * (EaseIn(val1, val2, (ratio < .5 and ratio or ratio - 1) * 2) + (ratio < .5 and 0 or val2 * 2))
-end
-
-Motions = {
-	Linear		= Linear,
-	EaseIn		= EaseIn,
-	EaseOut		= EaseOut,
-	EaseInOut	= EaseInOut,
 }

@@ -9,7 +9,7 @@ end
 
 function TweenCore:CreateID(args)
 	self.counter = self.counter + 1
-	return Settings.DefaultID .. self.counter
+	return Settings.DefaultIDPrefix .. self.counter
 end
 
 -- ########################################################################################################################################################

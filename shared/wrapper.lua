@@ -60,7 +60,6 @@ function TweenWrapper:WrapStep(tween)
 		else
 			self.core:SampleEvent(tween, TweenEvents.Error, self.wraps[tween.name].events)
 			self:RemoveTween(tween.name)
-			self.wraps[tween.name] = nil
 		end
 	end
 end

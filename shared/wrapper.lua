@@ -70,7 +70,7 @@ function TweenWrapper:WrapEnd(tween)
 	if wrap then
 		self:WrapStep(wrap)
 		self.core:SampleEvent(wrap, TweenEvents.End, wrap.events)
-		self:RemoveTween(tween.name) --self.wraps[tween.name] = nil
+		self:RemoveTween(tween.name)
 	end
 end
 

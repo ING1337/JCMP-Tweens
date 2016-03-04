@@ -53,22 +53,24 @@ end
 -- ########################################################################################################################################################
 
 function TweenWrapper:WrapStep(tween)
-	if self.wraps[tween.name] then
-		if IsValid(self.wraps[tween.name].object) then
-			WrapFunctions.Setter[self.wraps[tween.name].type](self.wraps[tween.name].object, tween.object)
-			self.core:SampleEvent(tween, TweenEvents.Tick, self.wraps[tween.name].events)
+	local wrap = self.wraps[tween.name]
+	if wrap then
+		if IsValid(wrap.object) then
+			WrapFunctions.Setter[wrap.type](wrap.object, tween.object)
+			self.core:SampleEvent(wrap, TweenEvents.Tick, wrap.events)
 		else
-			self.core:SampleEvent(tween, TweenEvents.Error, self.wraps[tween.name].events)
+			self.core:SampleEvent(wrap, TweenEvents.Error, wrap.events)
 			self:RemoveTween(tween.name)
 		end
 	end
 end
 
 function TweenWrapper:WrapEnd(tween)
-	if self.wraps[tween.name] then
-		self:WrapStep(tween)
-		self.core:SampleEvent(tween, TweenEvents.End, self.wraps[tween.name].events)
-		self.wraps[tween.name] = nil
+	local wrap = self.wraps[tween.name]
+	if wrap then
+		self:WrapStep(wrap)
+		self.core:SampleEvent(wrap, TweenEvents.End, wrap.events)
+		self:RemoveTween(tween.name) --self.wraps[tween.name] = nil
 	end
 end
 
